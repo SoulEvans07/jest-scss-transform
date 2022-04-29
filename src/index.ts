@@ -7,7 +7,7 @@ import { createFileCache, extractUrls } from './utils-parser';
 import postcssNestedModule from 'postcss-nested';
 import type Stylus from 'stylus';
 import type NodeSass from 'node-sass';
-import type { Transformer } from '@jest/transform';
+import type { Transformer, TransformOptions } from '@jest/transform';
 // eslint-disable-next-line node/no-extraneous-import
 import type { Config } from '@jest/types';
 import { getPreProcessorsConfig, IPreProcessorsConfig, requirePostcssConfig } from './utils';
@@ -124,7 +124,30 @@ const nodeExecOptions: ExecSyncOptionsWithStringEncoding = {
 };
 let getFileData;
 
+const fs = require('fs');
+const crypto = require('crypto');
+const THIS_FILE = fs.readFileSync(__filename);
+
 const moduleTransform: Transformer = {
+  getCacheKey(sourceText: string, sourcePath: Config.Path, configString: TransformOptions<unknown>) {
+    const key = crypto
+      .createHash('md5')
+      .update(THIS_FILE)
+      .update('\0', 'utf8')
+      .update(sourceText)
+      .update('\0', 'utf8')
+      .update(sourcePath)
+      .update('\0', 'utf8')
+      .update(configString)
+      .update('\0', 'utf8')
+      .update(JSON.stringify(getPreProcessorsConfig(configPath)))
+      // TODO: load postcssrc (the config) sync and make it part of the cache
+      // .update("\0", "utf8")
+      // .update(JSON.stringify(getPostCssConfig(filename)))
+      .update('\0', 'utf8')
+      .digest('hex');
+    return key;
+  },
   process(src, path, transformConfig) {
     // Jest 27+ and Jesy 26 has different transformConfig
     const config: Config.ProjectConfig = transformConfig.config || (transformConfig as unknown as Config.ProjectConfig);

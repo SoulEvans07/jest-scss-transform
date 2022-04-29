@@ -60,6 +60,8 @@ module.exports = {
     'object-property-newline': 'off',
     'dot-location': 'off',
     'multiline-ternary': 'off',
+    'multiline-comment-style': 'off',
+    'no-warning-comments': 'off',
     'max-statements': 'off',
     'no-ternary': 'off',
     'init-declarations': 'off',

@@ -10,7 +10,7 @@
   "main": "dist/index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/Connormiha/jest-css-modules-transform.git"
+    "url": "git@github.com:SoulEvans07/jest-scss-transform.git"
   },
   "keywords": [
     "jest",
