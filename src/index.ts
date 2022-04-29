@@ -138,7 +138,7 @@ const moduleTransform: Transformer = {
       .update('\0', 'utf8')
       .update(sourcePath)
       .update('\0', 'utf8')
-      .update(configString)
+      .update(JSON.stringify(configString))
       .update('\0', 'utf8')
       .update(JSON.stringify(getPreProcessorsConfig(configPath)))
       // TODO: load postcssrc (the config) sync and make it part of the cache

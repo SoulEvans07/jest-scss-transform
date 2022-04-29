@@ -29,11 +29,10 @@
     "css-module"
   ],
   "scripts": {
-    "build": "rm -fr dist && mkdir dist && tsc -p src --outDir dist",
+    "build": "rimraf dist && mkdir dist && tsc -p src --outDir dist",
     "coverage": "jest --coverage",
     "lint": "eslint src --ext .ts,.js",
     "format": "prettier --write './**/*.{js,ts}' && eslint src --ext .ts,.js --fix",
-    "prepare": "npm run lint && npm test",
     "test": "node test.js",
     "test:unix": "npm run build && npm run test:base && npm run test:config && npm run test:sassrc && npm run test:camel-case && npm run test:dashes && npm run test:camel-case-only && npm run test:prepend-data && npm run test:prepend-data-relative && npm run test:classic-sass-module && npm run test:inject-styles",
     "test:windows": "npm run build && npm run test:base && npm run test:config && npm run test:sassrc && npm run test:camel-case && npm run test:dashes && npm run test:prepend-data && npm run test:prepend-data-relative && npm run test:classic-sass-module && npm run test:inject-styles",
@@ -75,6 +74,7 @@
   "dependencies": {
     "camelcase": "6.3.0",
     "postcss": "^7.0.30 || ^8.0.0",
-    "postcss-nested": "^4.2.1 || ^5.0.0"
+    "postcss-nested": "^4.2.1 || ^5.0.0",
+    "rimraf": "^3.0.2"
   }
 }
